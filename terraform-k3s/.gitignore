@@ -1,0 +1,12 @@
+# Секреты — никогда не коммитить
+terraform.tfvars
+*.tfstate
+*.tfstate.backup
+tfplan
+
+# Terraform рабочие файлы
+.terraform/
+.terraform.lock.hcl
+
+# Ansible инвентарь (генерируется автоматически)
+inventory.ini

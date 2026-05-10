@@ -1,0 +1,29 @@
+image: hashicorp/terraform:1.13
+
+variables:
+  TF_IN_AUTOMATION: "true"
+
+stages:
+  - validate
+  - plan
+
+before_script:
+  - terraform --version
+
+validate:
+  stage: validate
+  script:
+    - terraform init -backend=false
+    - terraform validate
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+plan:
+  stage: plan
+  script:
+    - terraform init -backend=false
+    - terraform plan -var-file=cluster.tfvars
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
